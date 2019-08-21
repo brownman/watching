@@ -2,12 +2,13 @@
   "name": "targil",
   "version": "0.0.1",
   "engines": {
-    "node": "6.9.1"
+    "node": "12.8.1"
   },
   "dependencies": {
     "async": "^2.6.1",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "jest": "^24.9.0",
     "mysql": "github:mysqljs/mysql",
     "yarn": "^1.17.3"
   }

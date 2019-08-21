@@ -1,20 +1,22 @@
 const mysql = require('mysql');
-
 module.exports = function() {
 
-  const connection = mysql.createConnection({
-    host: '',
-    user: '',
-    password: '',
-    database: ''
-  });
-
+const connection = mysql.createConnection({
+  host: process.env.DB_HOST_DOCKER,
+  port: process.env.DB_PORT_DOCKER,
+  user: process.env.DB_USER_DOCKER,
+  password: process.env.DB_PASSWORD_DOCKER,
+  database: process.env.DB_DATABASE_DOCKER,
+  //connectionLimit: 1,
+  //debug: false 
+});
+  
   connection.connect(function(err) {
     if (err) {
       //Handle this error
+	   console.log(err);
       return;
     }
-
   });
 
   //Wrapper method to execute queries with callbacks
@@ -37,6 +39,13 @@ module.exports = function() {
 
   db.fetchSeriesNoJoins = function(callback) {
     // Add code here
+	 var query = 'SELECT * FROM series';
+	executeQueryWithPromise(query)
+		  .then(function(){
+	console.log(arguments);
+	}).catch(function(){
+	console.log(arguments);
+	})
   };
 
   db.fetchSeriesWithJoins = function(callback) {
@@ -53,3 +62,17 @@ module.exports = function() {
 
   return db;
 };
+
+/*
+const pool      =    mysql.createPool({
+    connectionLimit : 100, //important
+    host     : 'localhost',
+    port: 3306,
+    user     : 'root',
+    password : '',
+    database : 'address_book',
+    debug    :  true
+});
+//pool.getConnection(function(err) {
+*/
+
