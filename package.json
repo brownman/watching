@@ -4,6 +4,10 @@
   "engines": {
     "node": "12.8.1"
   },
+  "scripts": {
+  "test": "bash -c 'source ./SH/start.sh && ./node_modules/jest/bin/jest.js'",
+  "start": "bash -c 'source ./SH/start.sh && node .'"
+  },
   "dependencies": {
     "async": "^2.6.1",
     "body-parser": "^1.18.3",

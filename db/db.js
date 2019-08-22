@@ -14,8 +14,8 @@ const connection = mysql.createConnection({
   connection.connect(function(err) {
     if (err) {
       //Handle this error
-	   console.log(err);
-      return;
+	   //console.log(err);
+      return err;
     }
   });
 
@@ -39,13 +39,13 @@ const connection = mysql.createConnection({
 
   db.fetchSeriesNoJoins = function(callback) {
     // Add code here
-	 var query = 'SELECT * FROM series';
+	const query = 'SELECT * FROM series';
 	executeQueryWithPromise(query)
-		  .then(function(){
-	console.log(arguments);
-	}).catch(function(){
-	console.log(arguments);
-	})
+		  .then(function(data){
+	return callback(null,data);
+		  }).catch(function(err){
+	return callback(err);
+		  })
   };
 
   db.fetchSeriesWithJoins = function(callback) {
@@ -60,7 +60,10 @@ const connection = mysql.createConnection({
     // Add code here
   };
 
-  return db;
+  return {
+	  db: db,
+	  connection: connection
+  }
 };
 
 /*
