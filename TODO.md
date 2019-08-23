@@ -19,8 +19,27 @@ docker run --name my-own-phpmyadmin -d --link my-own-mysql:db -p 8081:80 phpmyad
 
 SETUP
 -----
-- npm install
-- follow installation for the 2 dockers: mysql+phpmyadmin
-- import db scheme to mysql using phpmyadmin interface (Port:8081, User:root,Password:mypass123)
-- ./start.sh
+```bash
+npm install 
+./SH/docker.sh 	#pull and run (pull images if not exist) of mysql+phpmyadmin
+sleep 5 	# wait for container ready state
+./SH/migrate.sh # import db scheme(db/my_db.sql) to mysql container 
+
+npm test 	#run unit tests
+npm start	#run the web server, serves the API
+
+		#play with the database using phpmyadmin interface (Port:8081, User:root,Password:mypass123)
+```
+
+SQL:
+----
+- fetch episodes with join
+- fetch episodes without join: (using stored-procedure)
+- add user data
+- get user data
+
+API
+---
+- web server 
+- api serves those queries
 

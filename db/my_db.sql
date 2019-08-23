@@ -222,3 +222,11 @@ CREATE TABLE users_episodes (
          FOREIGN KEY (userID)  REFERENCES users  (id),
          FOREIGN KEY (episodeID) REFERENCES episodes (id)
        ) ENGINE = InnoDB;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getAllEpisodes`()
+    READS SQL DATA
+select s.name "serie name", b.seasonNumber "season num", c.episodeNumber "episode num"
+from series s, seasons b, episodes c
+where b.seriesID = s.id and b.id = c.seasonID$$
+DELIMITER ;

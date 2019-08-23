@@ -39,7 +39,9 @@ const connection = mysql.createConnection({
 
   db.fetchSeriesNoJoins = function(callback) {
     // Add code here
-	const query = 'SELECT * FROM series';
+//	const query = 'call getAllEpisodes();';//SELECT * FROM series';
+	  const query = 'SELECT series.name, b.seasonNumber, b.airDate as "season airDate", c.episodeNumber, c.airDate as "episode airDate" FROM series JOIN seasons b ON series.id=b.seriesID JOIN episodes c ON c.seasonID=b.id WHERE 1';
+
 	executeQueryWithPromise(query)
 		  .then(function(data){
 	return callback(null,data);
