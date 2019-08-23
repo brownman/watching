@@ -4,21 +4,33 @@ const db = obj_init.db;
 var connection = obj_init.connection;
 
 afterAll(() => {
-	connection.end(function(err,data){ if(err)
-			return err;
+	async () => {
+		await new Promise(resolve => setTimeout(() => resolve(), 5000)); // avoid jest open handle error
+		connection.end(function(err,data){ if(err)
+				return err;
 
-		async () => {
-			await new Promise(resolve => setTimeout(() => resolve(), 500)); // avoid jest open handle error
+			return data;})
 		}
 
-		return data;})
 });
 
 describe('get all series', () => {
-	test('there should be 3 initially', () => {
-		db.fetchSeriesNoJoins(function(err,data){
+	test('fetch series using join', () => {
+	 db.fetchSeriesNoJoins(function(err,data){
 			expect(err).toEqual(null);
-			expect(data.length).toEqual(3);
+			expect(data[0].length).toEqual(30);
+		
 		});
 	});
+	test('fetch series without using join', () => {
+		db.fetchSeriesWithJoins(function(err,data1){
+				//expect(err).toEqual(null);
+//			console.log(arguments)
+				expect(data1.length).toEqual(30);
+				///expect([data1[0]).toDeepEqual(data[0]);
+			});
+
+	});
+
 });
+
