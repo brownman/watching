@@ -34,3 +34,24 @@ describe('get all series', () => {
 
 });
 
+describe('get series for user', () => {
+	test('fetch series', () => {
+		const data_userId = {"userId": 3};
+		db.fetchUserWatchHistory(data_userId, function(err,data){
+			expect(err).toEqual(null);
+			expect(data[0].length).toEqual(3);
+		});
+	});
+
+
+	test('fetch series using join', () => {
+ 	const data_rate = {"userId":1,"episodeId":2,"rating":11}
+  	db.addUserWatchData(data_rate , function(err,data){
+			expect(err).not.toBeNull();
+		});
+	});
+
+});
+
+
+

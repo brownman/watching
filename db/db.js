@@ -59,10 +59,36 @@ const connection = mysql.createConnection({
   
   db.addUserWatchData = function(data, callback) {
     // Add code here
+	const sql='insert into users_episodes (userID,episodeID, rating) VALUES(?,?,?)'
+ 	const inserts = [data.userId,data.episodeId,data.rating];
+ 	query = mysql.format(sql, inserts);
+	executeQueryWithPromise(query)
+		  .then(function(data){
+	return callback(null,data);
+		  }).catch(function(err){
+	return callback(err);
+		  })
   };
 
   db.fetchUserWatchHistory = function(data, callback) {
     // Add code here
+	  //
+	 if (! data.hasOwnProperty('userId')){
+	 return callback('The object does not contain userId');
+	 }
+
+	 const userId = data.userId;
+	 const sql = 'call getUserEpisodes(?)';
+	 const inserts = [userId];
+ 	 query = mysql.format(sql, inserts);
+	 executeQueryWithPromise(query)
+		  .then(function(data){
+	 return callback(null,data);
+		  }).catch(function(err){
+	 return callback(err);
+		  })
+
+	 
   };
 
   return {
