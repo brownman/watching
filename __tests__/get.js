@@ -18,36 +18,34 @@ describe('get all series', () => {
 	test('fetch series using join', () => {
 		db.fetchSeriesNoJoins(function(err,data){
 			expect(err).toEqual(null);
-			expect(data[0].length).toEqual(30);
+			expect(data.length).toEqual(30);
 
 		});
 	});
 	test('fetch series without using join', () => {
 		db.fetchSeriesWithJoins(function(err,data1){
-			//expect(err).toEqual(null);
-			//console.log(data1)
 			expect(data1.length).toEqual(30);
-			///expect([data1[0]).toDeepEqual(data[0]);
 		});
 
 	});
 
 });
 
-describe('get series for user', () => {
-	test('fetch series', () => {
+describe('get episodes of user', () => {
+	test('return episodes for userId X', () => {
 		const data_userId = {"userId": 3};
 		db.fetchUserWatchHistory(data_userId, function(err,data){
 			expect(err).toEqual(null);
-			expect(data[0].length).toEqual(3);
+			expect(data.length).toEqual(3);
 		});
 	});
 
 
-	test('fetch series using join', () => {
- 	const data_rate = {"userId":1,"episodeId":2,"rating":11}
-  	db.addUserWatchData(data_rate , function(err,data){
+	test('validate episode rating to be 1-5', () => {
+		const data_rate = {"userId":1,"episodeId":2,"rating":11}
+		db.addUserWatchData(data_rate , function(err,data){
 			expect(err).not.toBeNull();
+			expect(err.toString()).toMatch(/CONSTRAINT/);
 		});
 	});
 

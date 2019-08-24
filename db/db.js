@@ -41,7 +41,7 @@ const connection = mysql.createConnection({
 	const query = 'call getAllEpisodes();'; //SELECT * FROM series';
 	executeQueryWithPromise(query)
 		  .then(function(data){
-	return callback(null,data);
+	return callback(null,data[0]);
 		  }).catch(function(err){
 	return callback(err);
 		  })
@@ -83,7 +83,7 @@ const connection = mysql.createConnection({
  	 query = mysql.format(sql, inserts);
 	 executeQueryWithPromise(query)
 		  .then(function(data){
-	 return callback(null,data);
+	 return callback(null,data[0]);
 		  }).catch(function(err){
 	 return callback(err);
 		  })
@@ -96,17 +96,4 @@ const connection = mysql.createConnection({
 	  connection: connection
   }
 };
-
-/*
-const pool      =    mysql.createPool({
-    connectionLimit : 100, //important
-    host     : 'localhost',
-    port: 3306,
-    user     : 'root',
-    password : '',
-    database : 'address_book',
-    debug    :  true
-});
-//pool.getConnection(function(err) {
-*/
 
