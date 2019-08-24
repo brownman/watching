@@ -1,3 +1,5 @@
+'use strict'
+
 const mysql = require('mysql');
 module.exports = function() {
 
@@ -7,8 +9,8 @@ const connection = mysql.createConnection({
   user: process.env.DB_USER_DOCKER,
   password: process.env.DB_PASSWORD_DOCKER,
   database: process.env.DB_DATABASE_DOCKER,
+  debug: process.env == 'dev' ? true : false 
   //connectionLimit: 1,
-  //debug: false 
 });
   
   connection.connect(function(err) {
@@ -61,7 +63,7 @@ const connection = mysql.createConnection({
     // Add code here
 	const sql='insert into users_episodes (userID,episodeID, rating) VALUES(?,?,?)'
  	const inserts = [data.userId,data.episodeId,data.rating];
- 	query = mysql.format(sql, inserts);
+ 	const query = mysql.format(sql, inserts);
 	executeQueryWithPromise(query)
 		  .then(function(data){
 	return callback(null,data);
@@ -80,7 +82,7 @@ const connection = mysql.createConnection({
 	 const userId = data.userId;
 	 const sql = 'call getUserEpisodes(?)';
 	 const inserts = [userId];
- 	 query = mysql.format(sql, inserts);
+ 	 const query = mysql.format(sql, inserts);
 	 executeQueryWithPromise(query)
 		  .then(function(data){
 	 return callback(null,data[0]);

@@ -1,3 +1,4 @@
+'use strict'
 //Server should be implemented here
 //
 const obj_main = require('../db/db.js')();
@@ -62,7 +63,7 @@ app.get('/addUserWatchDataAction', (req, res) => {
 	if ((!req.query.hasOwnProperty("userId") || ! parseInt(req.query.userId)) ||
 		(!req.query.hasOwnProperty("episodeId") || ! parseInt(req.query.episodeId)) ||
 		(!req.query.hasOwnProperty("rating") || ! parseInt(req.query.rating)))
-	{ return res.send('userId should be integer'); }
+	{ return res.send('userId, episodeId, rating -  should be integers'); }
 
 	const userId = req.query.userId;
 	const episodeId= req.query.episodeId;

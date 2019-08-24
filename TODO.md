@@ -1,3 +1,8 @@
+project: watching
+---
+- node.js + mysql exercise
+- tested on ubuntu 18.04
+
 install docker
 --
 - https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04
@@ -36,3 +41,6 @@ API
 - web server 
 - api spacification
 
+TODO:
+----
+- return results as nested structure series contains seasons which contains episodes

@@ -1,7 +1,8 @@
-assert=require('assert');
+'use strict'
+const assert=require('assert');
 const obj_init= require('../db/db.js')();
 const db = obj_init.db;
-var connection = obj_init.connection;
+const connection = obj_init.connection;
 
 afterAll(() => {
 	async () => {
