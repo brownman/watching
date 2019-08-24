@@ -212,16 +212,24 @@ INSERT INTO `users` VALUES (2, 'User2', '051111111');
 
 INSERT INTO `users` VALUES (3, 'User3', '052222222');
 
-CREATE TABLE users_episodes (
+CREATE TABLE `users_episodes` (
          userID   int(11)  NOT NULL,
          episodeID  int(11)  NOT NULL,
-	 rating		int(1) NOT NULL,                    
-
-         PRIMARY KEY (userID, episodeID),
-                     -- uniqueness
+	 rating		int(1),                    
+         PRIMARY KEY (userID, episodeID),                     -- uniqueness
          FOREIGN KEY (userID)  REFERENCES users  (id),
-         FOREIGN KEY (episodeID) REFERENCES episodes (id)
+         FOREIGN KEY (episodeID) REFERENCES episodes (id),
+CONSTRAINT `CHK_users_episodes_rating` CHECK (rating>=1 AND rating<=5)
+   --  CHECK (rating>=1 AND rating <=5)
+
        ) ENGINE = InnoDB;
+-- 
+-- ALTER TABLE `users_episodes`
+-- ADD CONSTRAINT CHK_RATING
+-- CHECK (rating>=1 AND rating<=5);
+
+    	--  CONSTRAINT `CHK_users_episodes_rating` CHECK (rating>=1 AND rating<=5)
+
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getAllEpisodes`()

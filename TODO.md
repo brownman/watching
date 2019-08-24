@@ -34,5 +34,5 @@ SQL:
 API
 ---
 - web server 
-- api serves those queries
+- api spacification
 
