@@ -48,7 +48,7 @@ const connection = mysql.createConnection({
   };
 
   db.fetchSeriesWithJoins = function(callback) {
-	  const query = 'SELECT series.name as "serie name", b.seasonNumber as "season num", c.episodeNumber as "episode num" FROM series JOIN seasons b ON series.id=b.seriesID JOIN episodes c ON c.seasonID=b.id WHERE 1';
+	  const query = 'SELECT series.name as "serie name", b.seasonNumber as "season num", c.episodeNumber as "episode num" FROM series JOIN seasons b ON series.id=b.seriesID JOIN episodes c ON c.seasonID=b.id GROUP BY series.name,2,3'; //, b.seasonNumber, c.episodeNumber ;';
 	executeQueryWithPromise(query)
 		  .then(function(data){
 	return callback(null,data);

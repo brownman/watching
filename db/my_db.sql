@@ -230,3 +230,15 @@ select s.name "serie name", b.seasonNumber "season num", c.episodeNumber "episod
 from series s, seasons b, episodes c
 where b.seriesID = s.id and b.id = c.seasonID$$
 DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getUserEpisodes`(IN `userId` INT(11))
+    READS SQL DATA
+select u.userID, u.rating, s.name "serie name", b.seasonNumber "season num", c.episodeNumber "episode num" from series s, seasons b, episodes c, users_episodes u where b.seriesID = s.id and b.id = c.seasonID and u.episodeID = c.id and u.userID=userId order by s.name,b.seasonNumber,c.episodeNumber$$
+DELIMITER ;
+
+insert into users_episodes (userID,episodeID, rating) VALUES(3, 2,4) ;
+insert into users_episodes (userID,episodeID, rating) VALUES(3, 1,4) ;
+insert into users_episodes (userID,episodeID, rating) VALUES(3, 3,4) ;
+insert into users_episodes (userID,episodeID, rating) VALUES(2, 3,5) ;
+insert into users_episodes (userID,episodeID, rating) VALUES(2, 1,5) ;

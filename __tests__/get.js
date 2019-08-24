@@ -10,25 +10,25 @@ afterAll(() => {
 				return err;
 
 			return data;})
-		}
+	}
 
 });
 
 describe('get all series', () => {
 	test('fetch series using join', () => {
-	 db.fetchSeriesNoJoins(function(err,data){
+		db.fetchSeriesNoJoins(function(err,data){
 			expect(err).toEqual(null);
 			expect(data[0].length).toEqual(30);
-		
+
 		});
 	});
 	test('fetch series without using join', () => {
 		db.fetchSeriesWithJoins(function(err,data1){
-				//expect(err).toEqual(null);
-//			console.log(arguments)
-				expect(data1.length).toEqual(30);
-				///expect([data1[0]).toDeepEqual(data[0]);
-			});
+			//expect(err).toEqual(null);
+			//console.log(data1)
+			expect(data1.length).toEqual(30);
+			///expect([data1[0]).toDeepEqual(data[0]);
+		});
 
 	});
 

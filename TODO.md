@@ -10,10 +10,6 @@ install node.js
 
 install dockers for: mysql, phpmyadmin 
 ------
-```bash
-docker run --name my-own-mysql -e MYSQL_ROOT_PASSWORD=mypass123 -p 3306:3306 -d mysql:8.0.1
-docker run --name my-own-phpmyadmin -d --link my-own-mysql:db -p 8081:80 phpmyadmin/phpmyadmin
-```
 - https://medium.com/@migueldoctor/run-mysql-phpmyadmin-locally-in-3-steps-using-docker-74eb735fa1fc
 
 
@@ -21,14 +17,11 @@ SETUP
 -----
 ```bash
 npm install 
-./SH/docker.sh 	#pull and run (pull images if not exist) of mysql+phpmyadmin
-sleep 5 	# wait for container ready state
-./SH/migrate.sh # import db scheme(db/my_db.sql) to mysql container 
-
+npm run setup 	# run mysql docker and import MySql data
 npm test 	#run unit tests
 npm start	#run the web server, serves the API
-
-		#play with the database using phpmyadmin interface (Port:8081, User:root,Password:mypass123)
+		
+#play with the database using phpmyadmin interface (Port:8081, User:root,Password:mypass123)
 ```
 
 SQL:

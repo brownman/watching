@@ -6,7 +6,8 @@
   },
   "scripts": {
   "test": "bash -c 'source ./SH/start.sh && ./node_modules/jest/bin/jest.js'",
-  "start": "bash -c 'source ./SH/start.sh && node .'"
+  "start": "bash -c 'source ./SH/start.sh && node .'",
+  "setup": "bash -c 'SH/docker.sh && SH/migrate.sh'"
   },
   "dependencies": {
     "async": "^2.6.1",
