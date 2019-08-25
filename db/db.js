@@ -16,7 +16,7 @@ const connection = mysql.createConnection({
   connection.connect(function(err) {
     if (err) {
       //Handle this error
-	   //console.log(err);
+	//console.log(err);
       return err;
     }
   });
@@ -74,11 +74,9 @@ const connection = mysql.createConnection({
 
   db.fetchUserWatchHistory = function(data, callback) {
     // Add code here
-	  //
 	 if (! data.hasOwnProperty('userId')){
 	 return callback('The object does not contain userId');
 	 }
-
 	 const userId = data.userId;
 	 const sql = 'call getUserEpisodes(?)';
 	 const inserts = [userId];
@@ -89,13 +87,11 @@ const connection = mysql.createConnection({
 		  }).catch(function(err){
 	 return callback(err);
 		  })
-
-	 
   };
 
   return {
 	  db: db,
-	  connection: connection
+	  connection: connection //expose it for the use of the testing suite
   }
 };
 

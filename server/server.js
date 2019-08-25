@@ -1,9 +1,8 @@
 'use strict'
 //Server should be implemented here
-//
+//express server serves the api defined on db/db.js
 const obj_main = require('../db/db.js')();
 const db = obj_main.db;
-const connection = obj_main.connection;
 
 const express = require('express');
 const app = express();
@@ -11,7 +10,7 @@ const path = require('path');
 
 
 app.get('/', (req, res) => { 
-	res.sendFile(path.join(__dirname + '/../public/index.html'));
+	res.sendFile(path.join(__dirname + '/../public/index.html')); //main view
 });
 
 app.get('/fetchSeriesWithJoins', (req, res) => { 
@@ -21,6 +20,7 @@ app.get('/fetchSeriesWithJoins', (req, res) => {
 		res.json(data);	
 	});
 });
+
 app.get('/fetchSeriesNoJoins', (req, res) => { 
 	db.fetchSeriesNoJoins(function(err,data){
 		if(err)
@@ -28,9 +28,11 @@ app.get('/fetchSeriesNoJoins', (req, res) => {
 		res.json(data);	
 	});
 });
+
 app.get('/fetchUserWatchHistory', (req, res) => { 
-	res.sendFile(path.join(__dirname + '/../public/fetchUserWatchHistory.html'));
+	res.sendFile(path.join(__dirname + '/../public/fetchUserWatchHistory.html')); //child view
 });
+
 app.get('/fetchUserWatchHistoryAction', (req, res) => { 
 	if (!req.query.hasOwnProperty("userId") || ! parseInt(req.query.userId))
 		return res.send('userId should be integer');
