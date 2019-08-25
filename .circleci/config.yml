@@ -21,7 +21,7 @@ jobs:
             - ./node_modules
       - setup_remote_docker:
           name: setup.ci 
-          command: npm run setup.ci
+          command: npm run setup.ci && npm test
       - run:
           name: test
           command: npm test
