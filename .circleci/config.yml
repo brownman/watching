@@ -5,6 +5,8 @@ jobs:
     docker:
       - image: circleci/node:12.8.1
       - image: mariadb
+        environment:
+                MYSQL_ROOT_PASSWORD: mypass123
     steps:
       - checkout
       - run:
