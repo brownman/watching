@@ -20,6 +20,9 @@ jobs:
           paths:
             - ./node_modules
       - run:
+          name: setup.ci 
+          command: npm run setup.ci
+      - run:
           name: test
           command: npm test
       - run:
