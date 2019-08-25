@@ -43,4 +43,6 @@ API
 
 TODO:
 ----
-- return results as nested structure series contains seasons which contains episodes
+- return results as nested structure series contains seasons which contains episodes:
+- using js reduce
+- using nested group concat

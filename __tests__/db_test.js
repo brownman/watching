@@ -37,7 +37,7 @@ describe('get episodes of user', () => {
 		const data_userId = {"userId": 3};
 		db.fetchUserWatchHistory(data_userId, function(err,data){
 			expect(err).toEqual(null);
-			expect(data.length).toEqual(3);
+			expect(data.length).toEqual(5);
 		});
 	});
 

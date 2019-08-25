@@ -225,15 +225,13 @@ CONSTRAINT `CHK_users_episodes_rating` CHECK (rating>=1 AND rating<=5)
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getAllEpisodes`()
     READS SQL DATA
-select s.name "serie name", b.seasonNumber "season num", c.episodeNumber "episode num"
-from series s, seasons b, episodes c
-where b.seriesID = s.id and b.id = c.seasonID$$
+select s.name "serie name", s.director "serie director", s.year "serie year", s.genre "serie genre", s.id "serie id", b.seasonNumber "season number" ,b.airDate "season airdate",b.id "season id", c.episodeNumber "episode number" ,c.airDate "episode airdate" ,c.id "episode id" from series s, seasons b, episodes c where b.seriesID = s.id and b.id = c.seasonID and b.id = c.seasonID order by s.name,b.seasonNumber,c.episodeNumber$$
 DELIMITER ;
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getUserEpisodes`(IN `userId` INT(11))
     READS SQL DATA
-select u.userID, u.rating, s.name "serie name", b.seasonNumber "season num", c.episodeNumber "episode num" from series s, seasons b, episodes c, users_episodes u where b.seriesID = s.id and b.id = c.seasonID and u.episodeID = c.id and u.userID=userId order by s.name,b.seasonNumber,c.episodeNumber$$
+select u.userID, u.rating,  s.name "serie name", s.director "serie director", s.year "serie year", s.genre "serie genre", s.id "serie id", b.seasonNumber "season number" ,b.airDate "season airdate",b.id "season id", c.episodeNumber "episode number" ,c.airDate "episode airdate" ,c.id "episode id" from series s, seasons b, episodes c ,users_episodes u where b.seriesID = s.id and b.id = c.seasonID and u.episodeID = c.id order by s.name,b.seasonNumber,c.episodeNumber$$
 DELIMITER ;
 
 insert into users_episodes (userID,episodeID, rating) VALUES(3, 2,4) ;

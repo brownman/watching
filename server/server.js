@@ -8,6 +8,58 @@ const express = require('express');
 const app = express();
 const path = require('path');
 
+function groupBy(data){
+	var groupBy = key=>array=>array.reduce((objectsByKeyValue,obj)=>{
+		const value = obj[key];
+		objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
+		return objectsByKeyValue;
+	}
+		, {});
+
+	var groupByBrand = groupBy('serie name');
+	var series = groupByBrand(data)
+	console.log(series)
+
+	Object.keys(series).forEach(function(key) {
+		//iterate series
+		var serie = series[key];
+		var groupBySeason = groupBy('season number');
+		serie = {
+			"serie director": serie[0]["serie director"],
+			"serie genre": serie[0]["serie genre"],
+			"serie year": serie[0]["serie year"],
+			"serie id": serie[0]["serie id"],
+			"seasons": groupBySeason(serie)
+		}
+		var seasons = serie["seasons"];
+		Object.keys(seasons).forEach(function(key2) {
+			//iterate seasons
+			var season = seasons[key2];
+			///////////////////
+			var groupByEpisode = groupBy('episode number');
+			season = {
+				"season airdate": season[0]["season airdate"],
+				"season seasonNumber": season[0]["season seasonNumber"],
+				"season id": season[0]["season id"],
+				"episodes": groupByEpisode(season)
+			}
+			var episodes = season["episodes"];
+			Object.keys(episodes).forEach(function(key3) {
+				episodes[key3] = {
+					"episode airdate": episodes[key3][0]["episode airdate"],
+					"episode id": episodes[key3][0]["episode id"]
+				}
+				season["episodes"] = episodes;
+			})
+			seasons[key2] = season;
+
+		})
+		series[key] = serie;
+	});
+
+//	console.log(series)
+	return series;
+}
 
 app.get('/', (req, res) => { 
 	res.sendFile(path.join(__dirname + '/../public/index.html')); //main view
@@ -16,16 +68,16 @@ app.get('/', (req, res) => {
 app.get('/fetchSeriesWithJoins', (req, res) => { 
 	db.fetchSeriesWithJoins(function(err,data){
 		if(err)
-			return res.send(err);
-		res.json(data);	
+			return res.json({"error":err});
+		res.json(groupBy(data));	
 	});
 });
 
 app.get('/fetchSeriesNoJoins', (req, res) => { 
 	db.fetchSeriesNoJoins(function(err,data){
 		if(err)
-			return res.send(err);
-		res.json(data);	
+			return res.json({"error":err});
+		res.json(groupBy(data));	
 	});
 });
 
@@ -34,26 +86,14 @@ app.get('/fetchUserWatchHistory', (req, res) => {
 });
 
 app.get('/fetchUserWatchHistoryAction', (req, res) => { 
-	if (!req.query.hasOwnProperty("userId") || ! parseInt(req.query.userId))
+	if (!req.query.hasOwnProperty("userId") || ! parseInt(req.query.userId)) //input validation: userId must be an integer
 		return res.send('userId should be integer');
 	const userId = req.query.userId;
 	const data_userId={"userId": userId}
 	db.fetchUserWatchHistory(data_userId, function(err,data){
 		if(err)
-			return res.send(err);
-		res.json(data);	
-	});
-});
-
-app.get('/fetchUserWatchHistoryAction', (req, res) => { 
-	if (!req.query.hasOwnProperty("userId") || ! parseInt(req.query.userId))
-		return res.send('userId should be integer');
-	const userId = req.query.userId;
-	const data_userId={"userId": userId}
-	db.fetchUserWatchHistory(data_userId, function(err,data){
-		if(err)
-			return res.send(err);
-		res.json(data);	
+			return res.json({"error": err});
+		res.json({"userId":userId, "series":groupBy(data)});	
 	});
 });
 
@@ -74,8 +114,8 @@ app.get('/addUserWatchDataAction', (req, res) => {
 	const data_user={"userId": userId, "episodeId": episodeId, "rating":rating}
 	db.addUserWatchData(data_user, function(err,data){
 		if(err)
-			return res.send(err);
-		res.json(data);	
+			return res.json({"error": err});
+		res.json({"success": data});	
 	});
 });
 
