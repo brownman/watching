@@ -7,11 +7,12 @@ jobs:
       - image: mariadb
         environment:
                 MYSQL_ROOT_PASSWORD: mypass123
+                MYSQL_DATABASE: watching
     steps:
       - checkout
       - run:
           name: update-npm
-          command: 'sudo npm install -g npm@5'
+          command: 'sudo npm install -g npm'
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
@@ -22,19 +23,19 @@ jobs:
           paths:
             - ./node_modules
       - run:
+      # Our primary container isn't MYSQL so run a sleep command until it's ready.
+          name: Waiting for MySQL to be ready
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z 127.0.0.1 3306 && echo Success && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for MySQL && exit 1
+      - run:
           name: setup.ci 
           command: npm run setup.ci && npm test
       - run:
           name: test
           command: npm test
-      - run:
-          name: code-coverage
-          command: './node_modules/.bin/nyc report --reporter=text-lcov'
-      - store_artifacts:
-          path: test-results.xml
-          prefix: tests
-      - store_artifacts:
-          path: coverage
-          prefix: coverage
-      - store_test_results:
-          path: test-results.xml
