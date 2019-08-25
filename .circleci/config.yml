@@ -19,7 +19,7 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
-      - run:
+      - setup_remote_docker:
           name: setup.ci 
           command: npm run setup.ci
       - run:
