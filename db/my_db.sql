@@ -220,16 +220,7 @@ CREATE TABLE `users_episodes` (
          FOREIGN KEY (userID)  REFERENCES users  (id),
          FOREIGN KEY (episodeID) REFERENCES episodes (id),
 CONSTRAINT `CHK_users_episodes_rating` CHECK (rating>=1 AND rating<=5)
-   --  CHECK (rating>=1 AND rating <=5)
-
        ) ENGINE = InnoDB;
--- 
--- ALTER TABLE `users_episodes`
--- ADD CONSTRAINT CHK_RATING
--- CHECK (rating>=1 AND rating<=5);
-
-    	--  CONSTRAINT `CHK_users_episodes_rating` CHECK (rating>=1 AND rating<=5)
-
 
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getAllEpisodes`()
