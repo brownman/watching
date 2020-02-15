@@ -17,6 +17,6 @@
     "express": "^4.16.4",
     "jest": "^24.9.0",
     "mysql": "github:mysqljs/mysql",
-    "yarn": "^1.17.3"
+    "yarn": "^1.22.0"
   }
 }
