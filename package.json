@@ -12,7 +12,7 @@
   "debug": "NODE_ENV=dev DEBUG=* node ."
   },
   "dependencies": {
-    "async": "^2.6.1",
+    "async": "^2.6.4",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "jest": "^24.9.0",
